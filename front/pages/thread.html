@@ -1,0 +1,69 @@
+<div ng-show="contentType===1" class="forum_index">
+
+  <span ng-show="location==='/forum'">
+    <h2>Forum Index</h2>
+  </span>
+  <span ng-show="location!=='/forum'">
+    <h2 ng-show="response.sectionparents[0]!=='000000'"><a href="#/forum/{{ response.sectionparents[0] }}">^ Parent Directory</a></h2>
+    <h2 ng-show="response.sectionparents[0]==='000000'"><a href="#/forum/">^ Parent Directory</a></h2>
+  </span>
+
+  <span ng-repeat="secid in secids">
+
+    <h2 ng-show="sectypes[$index]==='SectionHead' && location!=='/forum'"><a href="#/forum/{{ response.sectionid[$index] }}">» {{ sectitles[$index] }} «</a></h2>
+    <h2 ng-show="sectypes[$index]==='SectionHead' && location==='/forum'"><a href="#/forum/{{ response.sectionid[$index] }}"> {{ sectitles[$index] }} </a></h2>
+    <h3 ng-show="sectypes[$index]==='Section'"><a href="#/forum/{{ response.sectionid[$index] }}">{{ sectitles[$index] }}</a></h3>
+
+    <span ng-show="sublocation[$index]>0">
+      <h4><a href="#/forum/{{ response.sectionid[$parent.$index + $index] }}" ng-repeat="secid in secids|limitTo:sublocation[$index]">{{ response.sectiontitle[$parent.$index + $index] }}</a></h4>
+    </span>
+
+    <hr ng-show="sectypes[$index]==='Divide'" />
+  </span>
+</div>
+
+<br ng-show="threadtitles.length > 0" />
+
+<div ng-show="threadtitles.length > 0" class="threadlist">
+  <table>
+    <tr>
+      <td class="tl-col1 tl-title">Topics</td>
+      <td class="tl-col2 tl-title">Posts</td>
+      <td class="tl-col3 tl-title">Updated</td>
+    </tr>
+    <tr ng-repeat="lols in threadids">
+      <td name="threadids[$index]" class="tl-col1 odd_row" ng-if="[$index] % 2 === 0"><a href="#/forum/{{ parentid[$index] }}/{{ threadids[$index] }}">{{ threadtitles[$index] }}</a><br />
+      by <span class="username"><a href="#/user/{{ author[$index].split('##')[2] }}">{{ author[$index].split('##')[0] }}</a></span><span><a>jump to end</a></span></td>
+      <td class="tl-col2 odd_row" ng-if="[$index] % 2 === 0">{{ replycount[$index] }}</td>
+      <td class="tl-col3 odd_row" ng-if="[$index] % 2 === 0">{{ lastpost[$index] }}</td>
+      <td name="threadids[$index]" class="tl-col1" ng-if="[$index] % 2 !== 0"><a href="#/forum/{{ parentid[$index] }}/{{ threadids[$index] }}">{{ threadtitles[$index] }}</a><br />
+        by <span class="username"><a href="#/user/{{ author[$index].split('##')[2] }}">{{ author[$index].split('##')[0] }}</a></span><span><a>jump to end</a></span></td>
+      <td class="tl-col2" ng-if="[$index] % 2 !== 0">{{ replycount[$index] }}</td>
+      <td class="tl-col3" ng-if="[$index] % 2 !== 0">{{ lastpost[$index] }}</td>
+    </tr>
+  </table>
+
+</div>
+<div class="generic_centre" ng-show="postmarker==='X'"><br /><button type="button" ng-click="make_post('new')">Create Thread</button></div>
+
+
+<div ng-show="contentType===3">
+
+  <h1><a href="#/forum/{{ response.parentid }}">{{ response.parenttitle }}</a></h1>
+  <h3>Thread: <a href="#/forum/{{ response.parentid }}/{{ response.threadid }}">{{ maintitle }}</a></h3>
+  <div ng-repeat="postid in postids">
+    <div ng-if="[$index] % 2 === 0" class="odd_post">
+      <h4><a ng-if="$index !==0" href="#/forum/{{ response.parentid }}/{{ response.threadid }}/{{ response.postids[$index] }}">{{ posttitles[$index] }}</a></h4>
+      <h5>by <span class="username"><a href="#/forum/{{ response.parentid }}">{{ response.authors[$index] }}</a></span> » {{ response.timestamps[$index] }}</h5>
+      <div ng-bind-html="pageContent[$index]"></div>
+    </div>
+    <div ng-if="[$index] % 2 !== 0" class="even_post">
+      <h4><a href="#/forum/{{ response.parentid }}/{{ response.threadid }}/{{ response.postids[$index] }}">{{ posttitles[$index] }}</a></h4>
+      <h5>by <span class="username"><a href="#/forum/{{ response.parentid }}">{{ response.authors[$index] }}</a></span> >> {{ response.timestamps[$index] }}</h5>
+      <div ng-bind-html="pageContent[$index]"></div>
+    </div>
+    <br />
+  </div>
+  <div class="generic_centre"><br /><button type="button" ng-click="make_post('reply')">Reply</button></div>
+  <h3><a href="#/forum/{{ response.parentid }}/{{ response.threadid }}">Jump to First Post</a></h3>
+</div>

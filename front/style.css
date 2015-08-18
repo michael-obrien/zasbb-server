@@ -1,0 +1,369 @@
+/******************************************************************************/
+/******************************************************************************/
+/**                             General Styles                               **/
+/******************************************************************************/
+/******************************************************************************/
+body {
+    background-image: url("assets/background.jpg");
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-position: center center;
+    background-color: #000;
+    color: #FFF;
+    font-size: 14px;
+    font-family: 'Open Sans', sans-serif;
+    /*font-family: "Times New Roman", Times, serif;*/
+
+}
+
+img {
+  max-width: 100%;
+}
+
+a {
+  text-decoration: none;
+  color: orange;
+}
+a:hover {
+  color: yellow;
+  text-decoration: underline;
+}
+
+hr {
+  border: 0;
+    border-bottom: 1px solid #222;
+    background: #000;
+}
+
+.auto-resizable-iframe {
+  max-width: 420px;
+  margin: 0px auto;
+}
+.auto-resizable-iframe > div {
+  position: relative;
+  padding-bottom: 60%;
+  height: 0px;
+}
+.auto-resizable-iframe iframe {
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  width: 100%;
+  height: 100%;
+}
+
+#container {
+  width: 100%;
+}
+
+.page_head {
+  background-image: url("assets/trans70.png");
+  padding: 10px;
+  border-radius: 10px;
+}
+
+.site_logo {
+  padding: 10px;
+  background-image: url("assets/logo_small.png");
+  background-size: contain;
+  background-repeat: no-repeat;
+  height: 183px;
+}
+
+.head_insert1 {
+  background-image: url("assets/trans70.png");
+  padding: 10px;
+  border-radius: 10px;
+  border-style: solid;
+  border-width: 1px;
+  border-color: #222;
+}
+
+.head_insert2 {
+  background-image: url("assets/trans70.png");
+  padding: 10px;
+  height: 20px;
+  border-radius: 10px;
+  border-style: solid;
+  border-width: 0px 1px 0px 1px;
+  border-color: #222;
+}
+
+.extra_nav_insert1 {
+  background-image: url("assets/trans30.png");
+  border-radius: 10px;
+  float: none;
+  text-align: center;
+  border-style: solid;
+  border-width: 1px 1px 0px 1px;
+  border-color: #222;
+}
+
+.page_body {
+  padding-left: 0px;
+  background-image: url("assets/trans70.png");
+  border-radius: 10px;
+  padding: 10px;
+  border-style: solid;
+  border-width: 1px;
+  border-color: #222;
+}
+
+.page_foot {
+  text-align: center;
+  color: darkred;
+}
+
+.login {
+  border-radius: 10px;
+  position: center;
+  padding: 10px 0px 10px 0px;
+}
+
+.logintext {
+  background-color: black;
+  border: 1px;
+  border-radius: 8px;
+  border-color: #400;
+  outline-style: none;
+  color: red;
+  text-align: center;
+  max-width: 100px;
+}
+
+
+
+/******************************************************************************/
+/******************************************************************************/
+/**                            Threadlist Table                              **/
+/******************************************************************************/
+/******************************************************************************/
+table {
+    width: 100%;
+    table-layout: fixed;
+}
+
+td {
+    border-radius: 10px;
+    padding: 4px;
+    overflow: hidden;
+}
+
+td.tl-col1 {
+  width: 100%;
+
+}
+
+td.tl-col2 {
+  /*visibility: hidden;*/
+  display: none;
+  /*width: 30px;*/
+
+}
+
+td.tl-col3 {
+  /*visibility: hidden;*/
+  /*width: 70px;*/
+  display: none;
+}
+
+.tl-title {
+  color: yellow;
+  font-weight: bold;
+}
+
+.odd_row {
+  background-image: url("assets/trans70.png");
+}
+
+.threadlist{
+  background-image: url("assets/trans70.png");
+  /*min-width: 60%;*/
+  border-radius: 10px;
+  padding: 5px 15px 15px 15px;
+}
+.threadlist a {
+  color:red;
+}
+.threadlist a:hover {
+  color:orange;
+}
+
+/******************************************************************************/
+/******************************************************************************/
+/**                            Section Listing                               **/
+/******************************************************************************/
+/******************************************************************************/
+.forum_index {
+  background-image: url("assets/trans70.png");
+  border-radius: 10px;
+  padding: 10px;
+}
+
+.forum_index a {
+  display: inline-block;
+}
+.forum_index h3 {
+  padding-left: 15px;
+}
+.forum_index h4 {
+  text-indent: 15px;
+  text-align: left;
+}
+
+
+/******************************************************************************/
+/******************************************************************************/
+/**                              Thread View                                 **/
+/******************************************************************************/
+/******************************************************************************/
+
+.post_container {
+  background-image: url("assets/trans70.png");
+  border-radius: 10px;
+  padding: 5px 15px 15px 15px;
+  overflow: hidden;
+}
+
+.odd_post {
+  background-image: url("assets/trans70.png");
+  border-radius: 10px;
+  padding: 5px 15px 15px 15px;
+  overflow: hidden;
+}
+
+.even_post {
+  background-image: url("assets/trans70.png");
+  border-radius: 10px;
+  padding: 5px 15px 15px 15px;
+  overflow: hidden;
+}
+
+
+
+/******************************************************************************/
+/******************************************************************************/
+/**                                Posting                                   **/
+/******************************************************************************/
+/******************************************************************************/
+
+.posting_contain {
+  width: 100%;
+  color: yellow;
+  margin-right: 10px;
+}
+
+.post_input {
+  border: none;
+  background: none;
+  border-radius: 10px;
+  background-image: url("assets/trans30.png");
+  padding: 5px;
+  width: 100%;
+  color: orange;
+  min-width: 25em;
+  outline: none;
+  box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+
+}
+
+.post_main_content {
+  height: 300px;
+}
+
+
+
+
+/******************************************************************************/
+/******************************************************************************/
+/**                                 Other                                    **/
+/******************************************************************************/
+/******************************************************************************/
+.username {
+  color: purple;
+}
+
+.username a {
+  color: purple;
+}
+
+.username a:hover {
+  color: purple;
+}
+
+
+.generic_centre {
+  text-align: center;
+}
+
+/******************************************************************************/
+/******************************************************************************/
+/**                         Desktop Modifications                            **/
+/******************************************************************************/
+/******************************************************************************/
+@media all and (min-width: 600px) {
+  body {
+  }
+
+  .extra_nav_insert1 {
+    background-image: none;
+    border-style: none;
+    float: left;
+    width: 150px;
+  }
+
+  .page_head {
+  }
+
+  .site_logo {
+    background-image: url("assets/logo_big.png");
+    height: 220px;
+  }
+
+  .page_body {
+    padding-left: 160px;
+    margin: auto;
+  }
+
+  .odd_post {
+    padding: 5px 20px 20px 20px;
+  }
+
+  .even_post {
+    padding: 5px 20px 20px 20px;
+  }
+
+
+  table {
+      width: 100%;
+  }
+
+  td {
+      border-radius: 10px;
+      padding: 4px;
+      overflow: hidden;
+  }
+
+  td.tl-col1 {
+    width: 100%;
+
+  }
+
+  td.tl-col2 {
+    display: table-cell;
+    text-align: center;
+    width: 30px;
+  }
+
+  td.tl-col3 {
+    display: table-cell;
+    text-align: center;
+    width: 70px;
+  }
+}

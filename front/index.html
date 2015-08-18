@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html ng-app="zasApp">
+
+  <head>
+    <title>Fury Guild, Shadowsong Europe</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.2/angular.min.js"></script>
+    <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.2/angular-route.min.js"></script>
+    <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.2/angular-sanitize.min.js"></script>
+    <script type="text/javascript" src="http://static.wowhead.com/widgets/power.js"></script><script>var wowhead_tooltips = { "colorlinks": true, "iconizelinks": true, "renamelinks": true }</script>
+
+    <script src="app.js"></script>
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+
+  <body>
+    <div id="container">
+      <div class="page_head">
+        <div class="head_insert1">
+          <div class="site_logo"></div>
+        </div>
+        <div class="head_insert2">
+
+          <img src="assets/icons/icon_home.png"></img>
+          <a href="#/"> Home</a>
+          <img src="assets/icons/icon_back_top.png"></img>
+          <a href="#/forum/"> Forum Index</a>
+
+        </div>
+        <div class="extra_nav_insert1" ng-controller="authController" ng-keypress="typinglogin()" ng-init="checksession()" ng-cloak>
+
+          <form ng-enter="auth_sub()" class="login" ng-hide="logstatus==='LOGGED IN!'">
+            <input type="text" name="username" placeholder="Username" class="logintext" ng-model="username">
+            <input type="password" name="password" placeholder="Password" class="logintext" ng-model="password"><br />
+
+          </form>
+          <button type="button" ng-hide="logstatus!=='LOGGED IN!'" ng-click="logout()">Log Out {{ logname }}</button>
+          <p ng-show="authmessage">{{ authmessage }}</p>
+
+
+        </div>
+
+        <div class="page_body">
+          <div ng-view></div>
+          <div class="page_foot">Design by Zas</div>
+        </div>
+
+      </div>
+    </div>
+  </body>
+
+</html>
