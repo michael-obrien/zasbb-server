@@ -13,23 +13,25 @@ server.register({ register: Chairo, options: senecaOptions }, function (err) {})
 //user credentials for auth.
 var users = [];
 
+var hostEnv = process.env.WEB_HOST || '127.0.0.1';
+
 //should replace this with a direct call to the database later
-server.seneca.client({port: 10101, pin: 'role:list,cmd:credentials'});
+server.seneca.client({port: 10101, pin: {role:'list',cmd:'credentials'},host:hostEnv});
 
 //see 02_make-post.js
-server.seneca.client({port: 10102, pin: 'role:make,cmd:post'});
+server.seneca.client({port: 10102, pin: {role:'make',cmd:'post'},host:hostEnv});
 
 //see 03_get-thread.js
-server.seneca.client({port: 10103, pin: 'role:get,cmd:thread'});
+server.seneca.client({port: 10103, pin: {role:'get',cmd:'thread'},host:hostEnv});
 
 //see 04_get-layout.js
-server.seneca.client({port: 10104, pin: 'role:get,cmd:section'});
+server.seneca.client({port: 10104, pin: {role:'get',cmd:'section'},host:hostEnv});
 
 //see 05_get-threadlist.js
-server.seneca.client({port: 10105, pin: 'role:get,cmd:threadlist'});
+server.seneca.client({port: 10105, pin: {role:'get',cmd:'threadlist'},host:hostEnv});
 
 //see 09_get-news.js
-server.seneca.client({port: 10109, pin: 'role:get,cmd:news'});
+server.seneca.client({port: 10109, pin: {role:'get',cmd:'news'},host:hostEnv});
 
 server.register(require('hapi-auth-cookie'), function (err) {
   server.auth.strategy('base', 'cookie', {
