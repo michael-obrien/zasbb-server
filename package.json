@@ -1,0 +1,27 @@
+{
+  "name": "Microservice-Forum",
+  "version": "0.0.1",
+  "description": "A simplistic forum using a Seneca Microservice Architecture and React.js Front-End",
+  "main": "00_server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node 01_directory-service.js"
+  },
+  "keywords": [
+    "Seneca",
+    "Hapi",
+    "Chairo",
+    "Microservices",
+    "Forum",
+    "React"
+  ],
+  "author": "Michael O'Brien",
+  "license": "MIT",
+  "dependencies": {
+    "chairo": "0.0.1",
+    "hapi": "^8.8.0",
+    "hapi-auth-cookie": "^3.0.1",
+    "seneca": "^0.6.3",
+    "seneca-jsonfile-store": "^0.2.2"
+  }
+}
