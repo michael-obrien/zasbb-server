@@ -9,6 +9,7 @@ RUN npm install
 
 RUN npm build
 
+ENV ZASBB_FUNCTION="Server"
 EXPOSE 3000
 
 ENTRYPOINT ["npm", "start"]
