@@ -2,6 +2,7 @@
 
 var Chairo = require('chairo');
 var Hapi = require('hapi');
+var config = require('./config');
 
 var server = new Hapi.Server();
 server.connection({ port: 3000 });
@@ -12,26 +13,38 @@ server.register({ register: Chairo, options: senecaOptions }, function (err) {})
 
 //user credentials for auth.
 var users = [];
+var services = [];
 
-var hostEnv = process.env.WEB_HOST || '127.0.0.1';
+//to receive info. from the service discovery process.
+server.seneca.listen({port:10199, pin: {cmd: 'config'}});
 
-//should replace this with a direct call to the database later
-server.seneca.client({port: 10101, pin: {role:'list',cmd:'credentials'},host:hostEnv});
+server.seneca.add({cmd:'config'}, function (msg, done) {
+  msg.data.forEach(function (item) {
+    services[config.getServiceNumber(item.name)] = item.address;
+  });
 
-//see 02_make-post.js
-server.seneca.client({port: 10102, pin: {role:'make',cmd:'post'},host:hostEnv});
+  //should replace this with a direct call to the database later
+  server.seneca.client({port: 10101, pin: {role:'list',cmd:'credentials'},host:services[1]});
+  if (users.length === 0) {
+    getCredentials();
+  }
 
-//see 03_get-thread.js
-server.seneca.client({port: 10103, pin: {role:'get',cmd:'thread'},host:hostEnv});
+  //see 02_make-post.js
+  server.seneca.client({port: 10102, pin: {role:'make',cmd:'post'},host:services[2]});
 
-//see 04_get-layout.js
-server.seneca.client({port: 10104, pin: {role:'get',cmd:'section'},host:hostEnv});
+  //see 03_get-thread.js
+  server.seneca.client({port: 10103, pin: {role:'get',cmd:'thread'},host:services[3]});
 
-//see 05_get-threadlist.js
-server.seneca.client({port: 10105, pin: {role:'get',cmd:'threadlist'},host:hostEnv});
+  //see 04_get-layout.js
+  server.seneca.client({port: 10104, pin: {role:'get',cmd:'section'},host:services[4]});
 
-//see 09_get-news.js
-server.seneca.client({port: 10109, pin: {role:'get',cmd:'news'},host:hostEnv});
+  //see 05_get-threadlist.js
+  server.seneca.client({port: 10105, pin: {role:'get',cmd:'threadlist'},host:services[5]});
+
+  //see 09_get-news.js
+  server.seneca.client({port: 10109, pin: {role:'get',cmd:'news'},host:services[9]});
+  done(null, msg.data);
+});
 
 server.register(require('hapi-auth-cookie'), function (err) {
   server.auth.strategy('base', 'cookie', {
@@ -46,24 +59,26 @@ server.register(require('hapi-auth-cookie'), function (err) {
   //route later. Also, this current implementation will fail if
   //01_directory-service.js isn't yet running. We shouldn't even be starting
   //the server until this step has been completed.
-server.seneca.act( 'role:list,cmd:credentials', function (err, result) {
-  if (err) {
-    //handleme
-    console.error('There was an error retrieving the userlist', err);
-    return;
-  } else {
-    result.listing.forEach(function (item) {
-      var obj = {
-        'username': item.username,
-        'password': item.password,
-        'scope': item.scope.split(','),
-        'id' : item.id
-      }
-      users.push(obj);
-    });
-    console.log('User database loaded successfully.');
-  }
-});
+function getCredentials() {
+  server.seneca.act( 'role:list,cmd:credentials', function (err, result) {
+    if (err) {
+      //handleme
+      console.error('There was an error retrieving the userlist', err);
+      return;
+    } else {
+      result.listing.forEach(function (item) {
+        var obj = {
+          'username': item.username,
+          'password': item.password,
+          'scope': item.scope.split(','),
+          'id' : item.id
+        }
+        users.push(obj);
+      });
+      console.log('User database loaded successfully.');
+    }
+  });
+}
 
 //authenticates and sets session if user exists in the pre-loaded database.
 server.route({
@@ -75,9 +90,11 @@ server.route({
         'username': request.payload.username,
         'password': request.payload.password
       };
+      console.log('attempt:', attemptUser);
 
       var account = {};
       users.forEach(function(user, z) {
+        console.log(user);
         if (user.username.toLowerCase() === request.payload.username || user.username === request.payload.username ) {
           account = users[z];
         }
