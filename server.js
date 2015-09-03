@@ -15,6 +15,8 @@ server.register({ register: Chairo, options: senecaOptions }, function (err) {})
 var users = [];
 var services = [];
 
+getCredentials();
+
 //to receive info. from the service discovery process.
 server.seneca.listen({port:10199, pin: {cmd: 'config'}});
 
@@ -24,10 +26,10 @@ server.seneca.add({cmd:'config'}, function (msg, done) {
   });
 
   //should replace this with a direct call to the database later
-  server.seneca.client({port: 10101, pin: {role:'list',cmd:'credentials'},host:services[1]});
-  if (users.length === 0) {
-    getCredentials();
-  }
+  //server.seneca.client({port: 10101, pin: {role:'list',cmd:'credentials'},host:services[1]});
+  //if (users.length === 0) {
+  //  getCredentials();
+  //}
 
   //see 02_make-post.js
   server.seneca.client({port: 10102, pin: {role:'make',cmd:'post'},host:services[2]});
@@ -54,31 +56,41 @@ server.register(require('hapi-auth-cookie'), function (err) {
   });
 });
 
-//Get all user credentials in the database and store in 'users' array.
-//Better to not have this as a seneca action and replace with a more direct
-  //route later. Also, this current implementation will fail if
-  //01_directory-service.js isn't yet running. We shouldn't even be starting
-  //the server until this step has been completed.
 function getCredentials() {
-  server.seneca.act( 'role:list,cmd:credentials', function (err, result) {
-    if (err) {
-      //handleme
-      console.error('There was an error retrieving the userlist', err);
-      return;
-    } else {
-      result.listing.forEach(function (item) {
-        var obj = {
-          'username': item.username,
-          'password': item.password,
-          'scope': item.scope.split(','),
-          'id' : item.id
-        }
-        users.push(obj);
-      });
-      console.log('User database loaded successfully.');
-    }
+  var credentials=server.seneca.make$('credentials')
+  credentials.list$( function(err,userList) {
+    userList.forEach(function (item) {
+      var user = {
+        'username': item.username,
+        'password': item.password,
+        'scope': item.scope.split(','),
+        'id': item.id
+      }
+      users.push(user);
+    });
+    console.log('User database loaded successfully.');
+    //console.log(users);
   });
 }
+//  server.seneca.act( 'role:list,cmd:credentials', function (err, result) {
+//    if (err) {
+      //handleme
+//      console.error('There was an error retrieving the userlist', err);
+//      return;
+//    } else {
+//      result.listing.forEach(function (item) {
+//        var obj = {
+//          'username': item.username,
+//          'password': item.password,
+//          'scope': item.scope.split(','),
+//          'id' : item.id
+//        }
+//        users.push(obj);
+//      });
+//      console.log('User database loaded successfully.');
+//    }
+//  });
+
 
 //authenticates and sets session if user exists in the pre-loaded database.
 server.route({
