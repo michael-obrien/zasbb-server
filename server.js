@@ -104,18 +104,15 @@ server.route({
         'username': request.payload.username,
         'password': request.payload.password
       };
-      console.log('attempt:', attemptUser);
-
+      
       var account = {};
       users.forEach(function(user, z) {
-        console.log(user);
         if (user.username.toLowerCase() === request.payload.username || user.username === request.payload.username ) {
           account = users[z];
         }
       });
 
       if (!account || account.password !== request.payload.password) {
-        console.log('auth failed', account.password, request.payload.password);
         return reply('Login Failed!');
 
       } else {
