@@ -11,6 +11,8 @@ var senecaOptions = { log: 'silent' };
 
 server.register({ register: Chairo, options: senecaOptions }, function (err) {});
 
+server.seneca.use('jsonfile-store',{folder:'./cred_db'});
+
 //user credentials for auth.
 var users = [];
 var services = [];
